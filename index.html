@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>آدم برغر | اطلب أونلاين</title>
+<meta name="description" content="آدم برغر - اطلب برغر، صاج، ريزو، بيتزا وستربس أونلاين. توصيل مجاني والدفع نقداً عند الاستلام. أرسل طلبك مباشرة على واتساب.">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0d0d; --card:#1a1a1a; --card2:#222; --accent:#ffb400; --red:#d62828;
+    --text:#fff; --muted:#b5b5b5; --wa:#25D366; --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{font-family:'Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:110px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 14px}
+  button{font-family:inherit;cursor:pointer;border:none}
+
+  /* ---------- Header ---------- */
+  header{text-align:center;padding:28px 14px 18px;
+    background:radial-gradient(ellipse at 50% 120%,rgba(214,40,40,.55),transparent 60%),
+               radial-gradient(ellipse at 50% 100%,rgba(255,180,0,.35),transparent 55%),var(--bg)}
+  .logo{font-size:2.6rem;font-weight:900;line-height:1.2;
+    background:linear-gradient(180deg,#ffe08a,var(--accent) 45%,var(--red));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 10px rgba(255,120,0,.45))}
+  .logo .flame{-webkit-text-fill-color:initial;color:initial}
+  .slogan{display:inline-block;margin-top:8px;background:var(--red);color:#fff;font-weight:700;
+    padding:4px 16px;border-radius:999px;font-size:1rem}
+  .sub{color:var(--muted);font-size:.9rem;margin-top:8px}
+
+  /* ---------- Sticky category bar ---------- */
+  .cats{position:sticky;top:0;z-index:50;background:rgba(13,13,13,.95);backdrop-filter:blur(6px);
+    border-bottom:1px solid #2a2a2a}
+  .cats .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;scrollbar-width:none}
+  .cats .wrap::-webkit-scrollbar{display:none}
+  .cat-btn{flex:0 0 auto;background:var(--card);color:var(--text);border:1px solid #333;
+    padding:6px 16px;border-radius:999px;font-size:.95rem;font-weight:700;white-space:nowrap}
+  .cat-btn.active{background:var(--accent);color:#111;border-color:var(--accent)}
+
+  /* ---------- Sections ---------- */
+  section{padding-top:22px;scroll-margin-top:62px}
+  h2{font-size:1.45rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  h2::after{content:"";flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--red),var(--accent))}
+  .note{color:var(--muted);font-size:.88rem;margin:-6px 0 12px}
+
+  /* ---------- Offers (big poster cards) ---------- */
+  .offers{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}
+  .offer{flex:0 0 78%;max-width:300px;scroll-snap-align:start;background:var(--card);border-radius:var(--radius);
+    overflow:hidden;border:1px solid #2c2c2c;display:flex;flex-direction:column}
+  /* Poster frame: hides ~top 12% (story bar) and ~bottom 8% (reply bar) of the screenshot */
+  .poster{position:relative;width:100%;aspect-ratio:9/15.6;overflow:hidden;background:#111}
+  .poster img{position:absolute;left:0;top:-15%;width:100%;height:125%;object-fit:cover}
+  .offer .body{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .offer .name{font-size:1.2rem;font-weight:900;color:var(--accent)}
+  .offer .desc{font-size:.9rem;color:#ddd}
+
+  /* ---------- Menu item cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .item{background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid #2c2c2c;display:flex;flex-direction:column}
+  .photo{position:relative;width:100%;aspect-ratio:1/1;background:#151515;overflow:hidden}
+  .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .item .body{padding:10px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .item .name{font-weight:700;font-size:1rem;line-height:1.35}
+  .item .desc{font-size:.8rem;color:var(--muted)}
+  .price{color:var(--accent);font-weight:900;font-size:1.05rem}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;flex-wrap:wrap}
+
+  /* Missing-image placeholder */
+  .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
+    background:radial-gradient(circle at 50% 110%,rgba(214,40,40,.35),transparent 60%),#161616;
+    color:#777;font-weight:700;font-size:.95rem}
+
+  /* ---------- Add / − 1 + control ---------- */
+  .ctrl{min-width:96px}
+  .add-btn{width:100%;background:var(--accent);color:#111;font-weight:900;font-size:.95rem;padding:6px 14px;border-radius:999px}
+  .stepper{display:flex;align-items:center;justify-content:space-between;background:#111;border:2px solid var(--accent);border-radius:999px;overflow:hidden}
+  .stepper button{width:34px;height:32px;background:transparent;color:var(--accent);font-size:1.3rem;font-weight:900;line-height:1}
+  .stepper span{min-width:24px;text-align:center;font-weight:900}
+
+  /* ---------- Floating cart button ---------- */
+  .cart-fab{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:60;width:calc(100% - 28px);max-width:560px;
+    background:linear-gradient(90deg,var(--red),#e85d04);color:#fff;font-weight:900;font-size:1.05rem;
+    padding:14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(214,40,40,.45)}
+  .cart-fab.empty{background:#2a2a2a;box-shadow:none;color:#aaa}
+
+  /* ---------- Bottom sheet ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:70;opacity:0;pointer-events:none;transition:.25s}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);z-index:80;width:100%;max-width:620px;max-height:92vh;
+    overflow-y:auto;background:#141414;border-radius:22px 22px 0 0;border-top:3px solid var(--accent);padding:10px 16px 24px;transition:transform .3s}
+  .sheet.open{transform:translate(-50%,0)}
+  .grab{width:48px;height:5px;background:#444;border-radius:5px;margin:4px auto 10px}
+  .sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .sheet-head h3{font-size:1.25rem;font-weight:900}
+  .close{background:#262626;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1.1rem}
+  .line{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #262626}
+  .line .info{flex:1;min-width:0}
+  .line .info b{display:block;font-weight:700;font-size:.95rem}
+  .line .info small{color:var(--accent);font-weight:700}
+  .remove{background:transparent;color:#ff6b6b;font-size:.85rem;font-weight:700;padding:4px}
+  .empty-msg{color:var(--muted);text-align:center;padding:24px 0}
+  .total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:900;padding:12px 0}
+  .total span:last-child{color:var(--accent)}
+  form{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+  label{font-size:.9rem;font-weight:700}
+  label .req{color:var(--red)}
+  input,textarea{width:100%;font-family:inherit;font-size:1rem;background:#1f1f1f;color:#fff;border:1px solid #333;
+    border-radius:12px;padding:10px 12px;margin-top:4px}
+  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  input.bad{border-color:var(--red)}
+  textarea{resize:vertical;min-height:60px}
+  .pay-note{text-align:center;color:var(--muted);font-size:.88rem}
+  .err{color:#ff6b6b;font-size:.9rem;font-weight:700;text-align:center;min-height:1.4em}
+  .wa-btn{background:var(--wa);color:#fff;font-weight:900;font-size:1.1rem;padding:14px;border-radius:14px}
+  .wa-btn:disabled{opacity:.45;cursor:not-allowed}
+  .thanks{text-align:center;padding:30px 6px}
+  .thanks .big{font-size:3rem}
+  .thanks h4{font-size:1.3rem;font-weight:900;margin:6px 0}
+  .thanks p{color:var(--muted);margin-bottom:16px}
+  .clear-btn{background:var(--accent);color:#111;font-weight:900;padding:12px 20px;border-radius:12px;font-size:1rem}
+  .link-btn{background:transparent;color:var(--muted);text-decoration:underline;margin-top:10px;font-size:.9rem}
+
+  footer{text-align:center;color:#777;font-size:.85rem;padding:30px 14px 10px}
+
+  @media (min-width:640px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .offer{flex-basis:280px}
+    .logo{font-size:3.2rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="flame">🔥</span> آدم برغر <span class="flame">🔥</span></div>
+  <div><span class="slogan">🛵 توصيل مجاني</span></div>
+  <p class="sub">اختار طلبك، وأرسله على واتساب • الدفع عند الاستلام</p>
+</header>
+
+<nav class="cats" aria-label="الأقسام"><div class="wrap" id="catBar"></div></nav>
+
+<main class="wrap" id="menuRoot"></main>
+
+<footer>آدم برغر © <span id="year"></span> • الدفع نقداً عند الاستلام • التوصيل مجاني</footer>
+
+<button class="cart-fab empty" id="cartFab" type="button">🛒 السلة فارغة</button>
+
+<div class="overlay" id="overlay"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="grab"></div>
+  <div class="sheet-head">
+    <h3 id="sheetTitle">🛒 سلة الطلب</h3>
+    <button class="close" id="closeSheet" type="button" aria-label="إغلاق">✕</button>
+  </div>
+
+  <div id="orderView">
+    <div id="cartLines"></div>
+    <div class="total"><span>المجموع</span><span id="cartTotal">0 د.ع</span></div>
+
+    <form id="orderForm" novalidate>
+      <label>الاسم <span class="req">*</span>
+        <input id="fName" type="text" autocomplete="name" placeholder="اسمك الكريم">
+      </label>
+      <label>رقم الهاتف <span class="req">*</span>
+        <input id="fPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="07XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right">
+      </label>
+      <label>المنطقة والعنوان بالتفصيل <span class="req">*</span>
+        <textarea id="fAddress" placeholder="المنطقة، الشارع، أقرب نقطة دالة"></textarea>
+      </label>
+      <label>ملاحظات (اختياري)
+        <input id="fNotes" type="text" placeholder="مثلاً: بدون بصل">
+      </label>
+      <p class="pay-note">💵 الدفع نقداً عند الاستلام • 🛵 التوصيل مجاني</p>
+      <p class="err" id="formErr" aria-live="polite"></p>
+      <button class="wa-btn" id="sendBtn" type="submit" disabled>أرسل الطلب على واتساب</button>
+    </form>
+  </div>
+
+  <div id="thanksView" class="thanks" hidden>
+    <div class="big">✅</div>
+    <h4>شكراً لطلبك من آدم برغر!</h4>
+    <p>تم فتح واتساب برسالة الطلب. اضغط "إرسال" في واتساب حتى يوصلنا الطلب، وراح نتواصل وياك قريباً.</p>
+    <button class="clear-btn" id="clearCartBtn" type="button">تفريغ السلة وطلب جديد</button><br>
+    <button class="link-btn" id="backBtn" type="button">رجوع للطلب</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   SETTINGS — EDIT HERE
+   ===================================================================== */
+
+// WhatsApp number of the restaurant: international format, no "+" and no spaces.
+// Example: 9647801234567  (964 = Iraq, then the number without the first 0)
+const WHATSAPP_NUMBER = "9647XXXXXXXXX";
+
+// Categories shown in the sticky top bar (order = order on the page).
+const CATEGORIES = [
+  { id: "offers",     title: "العروض" },
+  { id: "sandwiches", title: "سندويجات" },
+  { id: "saj",        title: "صاج" },
+  { id: "rizo",       title: "ريزو" },
+  { id: "pizza",      title: "بيتزا" },
+  { id: "strips",     title: "ستربس" }
+];
+
+// MENU — all offers and items are here.
+// To change a price: edit "price" (plain number, no commas).
+// To add an item: copy one line, give it a NEW unique "id", set cat / name / price / img.
+// "img" is the file inside the images/ folder. If the image is missing, a dark box with the name is shown.
+const MENU = [
+  // ----- Offers (shown first as big poster cards) -----
+  { id: "o1", cat: "offers", name: "عرض العائلة", desc: "2 بركر لحم + 2 بركر دجاج + صوص + ببسي", price: 10000, img: "images/offer1.jpg" },
+  { id: "o2", cat: "offers", name: "عرض الكومبو", desc: "1 ريزو + 1 بركر لحم + 1 بركر دجاج + 1 زنكر + صوص", price: 10000, img: "images/offer2.jpg" },
+  { id: "o3", cat: "offers", name: "عرض المشكل", desc: "1 ريزو + 1 بركر لحم + 1 زنكر + 1 صاج دجاج + صوص + ببسي", price: 10000, img: "images/offer3.jpg" },
+  { id: "o4", cat: "offers", name: "عرض الريزو", desc: "3 ريزو + 3 فنكر + ببسي", price: 11000, img: "images/offer4.jpg" },
+  { id: "o5", cat: "offers", name: "عرض الفرد", desc: "1 ريزو + 1 بركر لحم + 1 ببسي", price: 5000, img: "images/offer5.jpg" },
+
+  // ----- Sandwiches -----
+  { id: "s1", cat: "sandwiches", name: "سندويج بركر لحم", price: 3000, img: "images/burger.jpg" },
+  { id: "s2", cat: "sandwiches", name: "سندويج بركر دجاج", price: 2500, img: "images/burger-chicken.jpg" }, // TODO: confirm name
+  { id: "s3", cat: "sandwiches", name: "سندويج زنكر", price: 2500, img: "images/zinger.jpg" },
+  { id: "s4", cat: "sandwiches", name: "سندويج سكالوب", price: 2500, img: "images/escalope.jpg" },
+
+  // ----- Saj -----
+  { id: "j1", cat: "saj", name: "صاج لحم", price: 3000, img: "images/saj-beef.jpg" },
+  { id: "j2", cat: "saj", name: "صاج دجاج", price: 2500, img: "images/saj-chicken.jpg" },
+
+  // ----- Rizo -----
+  { id: "r1", cat: "rizo", name: "ريزو كبير", price: 5000, img: "images/rizo-large.jpg" },
+  { id: "r2", cat: "rizo", name: "ريزو صغير", price: 3000, img: "images/rizo-small.jpg" },
+
+  // ----- Pizza (sizes share one photo per type) -----
+  { id: "p1", cat: "pizza", name: "بيتزا لحم كبيرة", price: 8000, img: "images/pizza-beef.jpg" },
+  { id: "p2", cat: "pizza", name: "بيتزا دجاج كبيرة", price: 7000, img: "images/pizza-chicken.jpg" },
+  { id: "p3", cat: "pizza", name: "بيتزا لحم وسط", price: 6000, img: "images/pizza-beef.jpg" },
+  { id: "p4", cat: "pizza", name: "بيتزا دجاج وسط", price: 5000, img: "images/pizza-chicken.jpg" },
+
+  // ----- Strips (all served with صمون + فنكر + صوص) -----
+  { id: "t1", cat: "strips", name: "ستربس 4 قطع", desc: "مع صمون + فنكر + صوص", price: 5000, img: "images/strips.jpg" },
+  { id: "t2", cat: "strips", name: "ستربس 6 قطع", desc: "مع صمون + فنكر + صوص", price: 7000, img: "images/strips.jpg" },
+  { id: "t3", cat: "strips", name: "ستربس 10 قطع", desc: "مع صمون + فنكر + صوص", price: 10000, img: "images/strips.jpg" }
+];
+
+/* =====================================================================
+   APP CODE — no need to edit below this line
+   ===================================================================== */
+const CART_KEY = "adamBurger_cart_v1";
+const CUST_KEY = "adamBurger_customer_v1";
+const byId = Object.fromEntries(MENU.map(i => [i.id, i]));
+const $ = s => document.querySelector(s);
+const money = n => n.toLocaleString("en-US") + " د.ع";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch (e) { cart = {}; }
+for (const id in cart) if (!byId[id] || !(cart[id] > 0)) delete cart[id]; // drop removed items
+
+function saveCart() { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {} }
+
+/* ---------- Render menu ---------- */
+function imgHTML(item) {
+  return `<div class="ph">${esc(item.name)}</div>` +
+    `<img src="${esc(item.img)}" alt="${esc(item.name)}" loading="lazy" decoding="async" onerror="this.remove()">`;
+}
+
+function renderMenu() {
+  $("#catBar").innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-btn" type="button" data-target="${c.id}">${c.title}</button>`).join("");
+
+  $("#menuRoot").innerHTML = CATEGORIES.map(c => {
+    const items = MENU.filter(i => i.cat === c.id);
+    if (!items.length) return "";
+    if (c.id === "offers") {
+      return `<section id="${c.id}"><h2>🔥 ${c.title}</h2><div class="offers">` +
+        items.map(i => `
+          <article class="offer">
+            <div class="poster">${imgHTML(i)}</div>
+            <div class="body">
+              <div class="name">${esc(i.name)}</div>
+              <div class="desc">${esc(i.desc || "")}</div>
+              <div class="row"><span class="price">${money(i.price)}</span><div class="ctrl" data-ctrl="${i.id}"></div></div>
+            </div>
+          </article>`).join("") + `</div></section>`;
+    }
+    return `<section id="${c.id}"><h2>${c.title}</h2><div class="grid">` +
+      items.map(i => `
+        <article class="item">
+          <div class="photo">${imgHTML(i)}</div>
+          <div class="body">
+            <div class="name">${esc(i.name)}</div>
+            ${i.desc ? `<div class="desc">${esc(i.desc)}</div>` : ""}
+            <div class="price">${money(i.price)}</div>
+            <div class="row"><div class="ctrl" data-ctrl="${i.id}"></div></div>
+          </div>
+        </article>`).join("") + `</div></section>`;
+  }).join("");
+}
+
+function ctrlHTML(id) {
+  const q = cart[id] || 0;
+  if (!q) return `<button class="add-btn" type="button" data-act="add" data-id="${id}">أضف</button>`;
+  return `<div class="stepper"><button type="button" data-act="add" data-id="${id}" aria-label="زيادة">+</button>` +
+    `<span>${q}</span><button type="button" data-act="sub" data-id="${id}" aria-label="نقصان">−</button></div>`;
+}
+
+/* ---------- Cart ---------- */
+function cartLines() { return Object.keys(cart).filter(id => cart[id] > 0).map(id => ({ item: byId[id], qty: cart[id] })); }
+function cartCount() { return cartLines().reduce((s, l) => s + l.qty, 0); }
+function cartTotal() { return cartLines().reduce((s, l) => s + l.qty * l.item.price, 0); }
+
+function changeQty(id, d) {
+  if (!byId[id]) return;
+  cart[id] = Math.max(0, (cart[id] || 0) + d);
+  if (!cart[id]) delete cart[id];
+  saveCart(); refresh();
+}
+
+function refresh() {
+  document.querySelectorAll("[data-ctrl]").forEach(el => el.innerHTML = ctrlHTML(el.dataset.ctrl));
+  const n = cartCount(), t = cartTotal(), fab = $("#cartFab");
+  fab.textContent = n ? `🛒 السلة (${n}) — ${money(t)}` : "🛒 السلة فارغة";
+  fab.classList.toggle("empty", !n);
+
+  const lines = cartLines();
+  $("#cartLines").innerHTML = lines.length ? lines.map(({ item, qty }) => `
+    <div class="line">
+      <div class="info"><b>${esc(item.name)}</b><small>${qty} × ${money(item.price)} = ${money(qty * item.price)}</small></div>
+      <div class="ctrl">${ctrlHTML(item.id)}</div>
+      <button class="remove" type="button" data-act="remove" data-id="${item.id}">حذف</button>
+    </div>`).join("") : `<p class="empty-msg">السلة فارغة — أضف شي من القائمة 🍔</p>`;
+  $("#cartTotal").textContent = money(t);
+  validate(false);
+}
+
+/* ---------- Form ---------- */
+const F = { name: $("#fName"), phone: $("#fPhone"), address: $("#fAddress"), notes: $("#fNotes") };
+
+// Convert Arabic-Indic digits (٠١٢…) to 0-9 and drop spaces/dashes
+function cleanPhone(v) {
+  return v.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[\s\-]/g, "");
+}
+
+function validate(showAll) {
+  const name = F.name.value.trim(), phone = cleanPhone(F.phone.value), addr = F.address.value.trim();
+  let msg = "";
+  if (!cartCount()) msg = "السلة فارغة، أضف منتج واحد على الأقل.";
+  else if (!name) msg = "اكتب الاسم.";
+  else if (!phone) msg = "اكتب رقم الهاتف.";
+  else if (!/^07\d{9}$/.test(phone)) msg = "رقم الهاتف لازم يكون 11 رقم ويبدأ بـ 07 (مثال: 07801234567).";
+  else if (!addr) msg = "اكتب المنطقة والعنوان بالتفصيل.";
+  const ok = !msg;
+  $("#sendBtn").disabled = !ok;
+  // Show the message only after the user started typing, or when asked
+  const touched = showAll || name || phone || addr;
+  $("#formErr").textContent = touched ? msg : (cartCount() ? "" : msg);
+  F.phone.classList.toggle("bad", !!phone && !/^07\d{9}$/.test(phone));
+  return ok;
+}
+
+function saveCustomer() {
+  try {
+    localStorage.setItem(CUST_KEY, JSON.stringify({ name: F.name.value, phone: F.phone.value, address: F.address.value }));
+  } catch (e) {}
+}
+function loadCustomer() {
+  try {
+    const c = JSON.parse(localStorage.getItem(CUST_KEY)) || {};
+    F.name.value = c.name || ""; F.phone.value = c.phone || ""; F.address.value = c.address || "";
+  } catch (e) {}
+}
+
+function buildMessage() {
+  const sep = "━━━━━━━━━━";
+  const lines = cartLines().map(({ item, qty }) => `• ${qty} × ${item.name} = ${money(qty * item.price)}`);
+  return [
+    "🍔 طلب جديد - آدم برغر", sep, ...lines, sep,
+    `💰 المجموع: ${money(cartTotal())}`, "🛵 التوصيل: مجاني", "💵 الدفع: عند الاستلام", sep,
+    `👤 الاسم: ${F.name.value.trim()}`,
+    `📞 الهاتف: ${cleanPhone(F.phone.value)}`,
+    `📍 العنوان: ${F.address.value.trim()}`,
+    `📝 ملاحظات: ${F.notes.value.trim() || "لا يوجد"}`
+  ].join("\n");
+}
+
+/* ---------- Sheet ---------- */
+function openSheet() { $("#overlay").classList.add("open"); $("#sheet").classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeSheet() { $("#overlay").classList.remove("open"); $("#sheet").classList.remove("open"); document.body.style.overflow = ""; }
+function showThanks(on) { $("#orderView").hidden = on; $("#thanksView").hidden = !on; }
+
+/* ---------- Events ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]");
+  if (b) {
+    const id = b.dataset.id;
+    if (b.dataset.act === "add") changeQty(id, 1);
+    else if (b.dataset.act === "sub") changeQty(id, -1);
+    else if (b.dataset.act === "remove") { delete cart[id]; saveCart(); refresh(); }
+    return;
+  }
+  const c = e.target.closest(".cat-btn");
+  if (c) document.getElementById(c.dataset.target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("#cartFab").addEventListener("click", () => { showThanks(false); refresh(); openSheet(); });
+$("#overlay").addEventListener("click", closeSheet);
+$("#closeSheet").addEventListener("click", closeSheet);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+
+Object.values(F).forEach(el => el.addEventListener("input", () => { saveCustomer(); validate(false); }));
+
+$("#orderForm").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!validate(true)) return;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`;
+  const w = window.open(url, "_blank");
+  if (!w) location.href = url; // popup blocked → open in same tab
+  showThanks(true);
+});
+
+$("#clearCartBtn").addEventListener("click", () => {
+  cart = {}; saveCart(); F.notes.value = ""; refresh(); showThanks(false); closeSheet();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+$("#backBtn").addEventListener("click", () => showThanks(false));
+
+/* ---------- Highlight current category while scrolling ---------- */
+function setupSpy() {
+  const btns = [...document.querySelectorAll(".cat-btn")];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      btns.forEach(b => {
+        const on = b.dataset.target === en.target.id;
+        b.classList.toggle("active", on);
+        if (on) { const bar = $("#catBar"); bar.scrollLeft = b.offsetLeft - bar.clientWidth / 2 + b.offsetWidth / 2; }
+      });
+    });
+  }, { rootMargin: "-70px 0px -65% 0px" });
+  document.querySelectorAll("main section").forEach(s => obs.observe(s));
+}
+
+/* ---------- Start ---------- */
+$("#year").textContent = new Date().getFullYear();
+renderMenu();
+loadCustomer();
+refresh();
+setupSpy();
+</script>
+</body>
+</html>
