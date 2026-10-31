@@ -52,9 +52,12 @@
   .offers{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}
   .offer{flex:0 0 78%;max-width:300px;scroll-snap-align:start;background:var(--card);border-radius:var(--radius);
     overflow:hidden;border:1px solid #2c2c2c;display:flex;flex-direction:column}
-  /* Poster frame: hides ~top 12% (story bar) and ~bottom 8% (reply bar) of the screenshot */
-  .poster{position:relative;width:100%;aspect-ratio:9/15.6;overflow:hidden;background:#111}
-  .poster img{position:absolute;left:0;top:-15%;width:100%;height:125%;object-fit:cover}
+  /* Offer image frame: square by default */
+  .poster{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:#111}
+  .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* For phone-screenshot posters (shot:true): hides ~top 12% (story bar) and ~bottom 8% (reply bar) */
+  .poster.shot{aspect-ratio:9/15.6}
+  .poster.shot img{inset:auto;left:0;top:-15%;width:100%;height:125%}
   .offer .body{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
   .offer .name{font-size:1.2rem;font-weight:900;color:var(--accent)}
   .offer .desc{font-size:.9rem;color:#ddd}
@@ -214,7 +217,8 @@ const CATEGORIES = [
 // To add an item: copy one line, give it a NEW unique "id", set cat / name / price / img.
 // "img" is the file inside the images/ folder. If the image is missing, a dark box with the name is shown.
 const MENU = [
-  // ----- Offers (shown first as big poster cards) -----
+  // ----- Offers (shown first as big cards) -----
+  // Add  shot: true  to an offer if its image is a phone screenshot (hides the Facebook story bar and reply bar).
   { id: "o1", cat: "offers", name: "عرض العائلة", desc: "2 بركر لحم + 2 بركر دجاج + صوص + ببسي", price: 10000, img: "images/offer1.jpg" },
   { id: "o2", cat: "offers", name: "عرض الكومبو", desc: "1 ريزو + 1 بركر لحم + 1 بركر دجاج + 1 زنكر + صوص", price: 10000, img: "images/offer2.jpg" },
   { id: "o3", cat: "offers", name: "عرض المشكل", desc: "1 ريزو + 1 بركر لحم + 1 زنكر + 1 صاج دجاج + صوص + ببسي", price: 10000, img: "images/offer3.jpg" },
@@ -279,7 +283,7 @@ function renderMenu() {
       return `<section id="${c.id}"><h2>🔥 ${c.title}</h2><div class="offers">` +
         items.map(i => `
           <article class="offer">
-            <div class="poster">${imgHTML(i)}</div>
+            <div class="poster${i.shot ? " shot" : ""}">${imgHTML(i)}</div>
             <div class="body">
               <div class="name">${esc(i.name)}</div>
               <div class="desc">${esc(i.desc || "")}</div>
