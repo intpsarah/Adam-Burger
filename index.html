@@ -4,8 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>آدم برغر | اطلب أونلاين</title>
-<meta name="description" content="آدم برغر - اطلب برغر، صاج، ريزو، بيتزا وستربس أونلاين. توصيل مجاني والدفع نقداً عند الاستلام. أرسل طلبك مباشرة على واتساب.">
+<meta name="description" content="آدم برغر - اطلب برغر، صاج، ريزو، بيتزا وستربس أونلاين. توصيل مجاني والدفع نقداً عند الاستلام. أرسل طلبك مباشرة على واتساب أو إنستغرام.">
 <meta name="theme-color" content="#0d0d0d">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="آدم برغر, Adam Burger, برغر, زنكر, ريزو, بيتزا, صاج, ستربس, توصيل مجاني, مطعم, العراق">
+<link rel="canonical" href="https://intpsarah.github.io/Adam-Burger/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="آدم برغر | اطلب أونلاين">
+<meta property="og:description" content="برغر، زنكر، ريزو، بيتزا، صاج وستربس — توصيل مجاني والدفع عند الاستلام. اطلب على واتساب أو إنستغرام.">
+<meta property="og:url" content="https://intpsarah.github.io/Adam-Burger/">
+<meta property="og:image" content="https://intpsarah.github.io/Adam-Burger/images/offer1.jpg">
+<meta property="og:locale" content="ar_IQ">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"آدم برغر","alternateName":"Adam Burger",
+ "url":"https://intpsarah.github.io/Adam-Burger/","image":"https://intpsarah.github.io/Adam-Burger/images/offer1.jpg",
+ "servesCuisine":["Burgers","Fast Food"],"priceRange":"IQD","telephone":"+9647731234914",
+ "address":{"@type":"PostalAddress","addressCountry":"IQ"},
+ "sameAs":["https://www.instagram.com/d.brkr/"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -120,7 +136,10 @@
   .pay-note{text-align:center;color:var(--muted);font-size:.88rem}
   .err{color:#ff6b6b;font-size:.9rem;font-weight:700;text-align:center;min-height:1.4em}
   .wa-btn{background:var(--wa);color:#fff;font-weight:900;font-size:1.1rem;padding:14px;border-radius:14px}
-  .wa-btn:disabled{opacity:.45;cursor:not-allowed}
+  .send-btns{display:flex;flex-direction:column;gap:10px}
+  .choose{text-align:center;font-weight:700;margin:4px 0 8px}
+  .ig-btn{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);color:#fff;font-weight:900;font-size:1.1rem;padding:14px;border-radius:14px}
+  .wa-btn:disabled,.ig-btn:disabled{opacity:.45;cursor:not-allowed}
   .thanks{text-align:center;padding:30px 6px}
   .thanks .big{font-size:3rem}
   .thanks h4{font-size:1.3rem;font-weight:900;margin:6px 0}
@@ -142,7 +161,7 @@
 <header>
   <div class="logo"><span class="flame">🔥</span> آدم برغر <span class="flame">🔥</span></div>
   <div><span class="slogan">🛵 توصيل مجاني</span></div>
-  <p class="sub">اختار طلبك، وأرسله على واتساب • الدفع عند الاستلام</p>
+  <p class="sub">اختار طلبك، وأرسله على واتساب أو إنستغرام • الدفع عند الاستلام</p>
 </header>
 
 <nav class="cats" aria-label="الأقسام"><div class="wrap" id="catBar"></div></nav>
@@ -165,29 +184,19 @@
     <div id="cartLines"></div>
     <div class="total"><span>المجموع</span><span id="cartTotal">0 د.ع</span></div>
 
-    <form id="orderForm" novalidate>
-      <label>الاسم <span class="req">*</span>
-        <input id="fName" type="text" autocomplete="name" placeholder="اسمك الكريم">
-      </label>
-      <label>رقم الهاتف <span class="req">*</span>
-        <input id="fPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="07XXXXXXXXX" maxlength="14" dir="ltr" style="text-align:right">
-      </label>
-      <label>المنطقة والعنوان بالتفصيل <span class="req">*</span>
-        <textarea id="fAddress" placeholder="المنطقة، الشارع، أقرب نقطة دالة"></textarea>
-      </label>
-      <label>ملاحظات (اختياري)
-        <input id="fNotes" type="text" placeholder="مثلاً: بدون بصل">
-      </label>
-      <p class="pay-note">💵 الدفع نقداً عند الاستلام • 🛵 التوصيل مجاني</p>
-      <p class="err" id="formErr" aria-live="polite"></p>
-      <button class="wa-btn" id="sendBtn" type="submit" disabled>أرسل الطلب على واتساب</button>
-    </form>
+    <p class="pay-note">💵 الدفع نقداً عند الاستلام • 🛵 التوصيل مجاني</p>
+    <p class="err" id="formErr" aria-live="polite"></p>
+    <p class="choose">اختار وين ترسل الطلب:</p>
+    <div class="send-btns">
+      <button class="wa-btn" id="sendWa" type="button" disabled>💬 أرسل الطلب على واتساب</button>
+      <button class="ig-btn" id="sendIg" type="button" disabled>📸 أرسل الطلب على إنستغرام</button>
+    </div>
   </div>
 
   <div id="thanksView" class="thanks" hidden>
     <div class="big">✅</div>
     <h4>شكراً لطلبك من آدم برغر!</h4>
-    <p>تم فتح واتساب برسالة الطلب. اضغط "إرسال" في واتساب حتى يوصلنا الطلب، وراح نتواصل وياك قريباً.</p>
+    <p id="thanksText"></p>
     <button class="clear-btn" id="clearCartBtn" type="button">تفريغ السلة وطلب جديد</button><br>
     <button class="link-btn" id="backBtn" type="button">رجوع للطلب</button>
   </div>
@@ -201,6 +210,9 @@
 // WhatsApp number of the restaurant: international format, no "+" and no spaces.
 // Example: 9647801234567  (964 = Iraq, then the number without the first 0)
 const WHATSAPP_NUMBER = "9647731234914";
+
+// Instagram username of the restaurant (without @). Orders open a direct message to this account.
+const INSTAGRAM_USERNAME = "d.brkr";
 
 // Categories shown in the sticky top bar (order = order on the page).
 const CATEGORIES = [
@@ -254,7 +266,6 @@ const MENU = [
    APP CODE — no need to edit below this line
    ===================================================================== */
 const CART_KEY = "adamBurger_cart_v1";
-const CUST_KEY = "adamBurger_customer_v1";
 const byId = Object.fromEntries(MENU.map(i => [i.id, i]));
 const $ = s => document.querySelector(s);
 const money = n => n.toLocaleString("en-US") + " د.ع";
@@ -338,44 +349,15 @@ function refresh() {
       <button class="remove" type="button" data-act="remove" data-id="${item.id}">حذف</button>
     </div>`).join("") : `<p class="empty-msg">السلة فارغة — أضف شي من القائمة 🍔</p>`;
   $("#cartTotal").textContent = money(t);
-  validate(false);
+  validate();
 }
 
-/* ---------- Form ---------- */
-const F = { name: $("#fName"), phone: $("#fPhone"), address: $("#fAddress"), notes: $("#fNotes") };
-
-// Convert Arabic-Indic digits (٠١٢…) to 0-9 and drop spaces/dashes
-function cleanPhone(v) {
-  return v.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[\s\-]/g, "");
-}
-
-function validate(showAll) {
-  const name = F.name.value.trim(), phone = cleanPhone(F.phone.value), addr = F.address.value.trim();
-  let msg = "";
-  if (!cartCount()) msg = "السلة فارغة، أضف منتج واحد على الأقل.";
-  else if (!name) msg = "اكتب الاسم.";
-  else if (!phone) msg = "اكتب رقم الهاتف.";
-  else if (!/^07\d{9}$/.test(phone)) msg = "رقم الهاتف لازم يكون 11 رقم ويبدأ بـ 07 (مثال: 07801234567).";
-  else if (!addr) msg = "اكتب المنطقة والعنوان بالتفصيل.";
-  const ok = !msg;
-  $("#sendBtn").disabled = !ok;
-  // Show the message only after the user started typing, or when asked
-  const touched = showAll || name || phone || addr;
-  $("#formErr").textContent = touched ? msg : (cartCount() ? "" : msg);
-  F.phone.classList.toggle("bad", !!phone && !/^07\d{9}$/.test(phone));
+/* ---------- Send buttons ---------- */
+function validate() {
+  const ok = cartCount() > 0;
+  $("#sendWa").disabled = !ok; $("#sendIg").disabled = !ok;
+  $("#formErr").textContent = ok ? "" : "السلة فارغة، أضف منتج واحد على الأقل.";
   return ok;
-}
-
-function saveCustomer() {
-  try {
-    localStorage.setItem(CUST_KEY, JSON.stringify({ name: F.name.value, phone: F.phone.value, address: F.address.value }));
-  } catch (e) {}
-}
-function loadCustomer() {
-  try {
-    const c = JSON.parse(localStorage.getItem(CUST_KEY)) || {};
-    F.name.value = c.name || ""; F.phone.value = c.phone || ""; F.address.value = c.address || "";
-  } catch (e) {}
 }
 
 function buildMessage() {
@@ -383,12 +365,21 @@ function buildMessage() {
   const lines = cartLines().map(({ item, qty }) => `• ${qty} × ${item.name} = ${money(qty * item.price)}`);
   return [
     "🍔 طلب جديد - آدم برغر", sep, ...lines, sep,
-    `💰 المجموع: ${money(cartTotal())}`, "🛵 التوصيل: مجاني", "💵 الدفع: عند الاستلام", sep,
-    `👤 الاسم: ${F.name.value.trim()}`,
-    `📞 الهاتف: ${cleanPhone(F.phone.value)}`,
-    `📍 العنوان: ${F.address.value.trim()}`,
-    `📝 ملاحظات: ${F.notes.value.trim() || "لا يوجد"}`
+    `💰 المجموع: ${money(cartTotal())}`, "🛵 التوصيل: مجاني", "💵 الدفع: عند الاستلام"
   ].join("\n");
+}
+
+function openLink(url) {
+  const w = window.open(url, "_blank");
+  if (!w) location.href = url; // popup blocked → open in same tab
+}
+
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) {}
+  try {
+    const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); const ok = document.execCommand("copy"); ta.remove(); return ok;
+  } catch (e) { return false; }
 }
 
 /* ---------- Sheet ---------- */
@@ -415,19 +406,26 @@ $("#overlay").addEventListener("click", closeSheet);
 $("#closeSheet").addEventListener("click", closeSheet);
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 
-Object.values(F).forEach(el => el.addEventListener("input", () => { saveCustomer(); validate(false); }));
+$("#sendWa").addEventListener("click", () => {
+  if (!validate()) return;
+  openLink(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`);
+  $("#thanksText").textContent = 'تم فتح واتساب برسالة الطلب. اضغط "إرسال" حتى يوصلنا طلبك، وراح نتواصل وياك قريباً.';
+  showThanks(true);
+});
 
-$("#orderForm").addEventListener("submit", e => {
-  e.preventDefault();
-  if (!validate(true)) return;
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`;
-  const w = window.open(url, "_blank");
-  if (!w) location.href = url; // popup blocked → open in same tab
+// Instagram cannot pre-fill a message, so the order is copied first; the customer pastes it in the chat.
+$("#sendIg").addEventListener("click", async () => {
+  if (!validate()) return;
+  const copied = await copyText(buildMessage());
+  openLink(`https://ig.me/m/${INSTAGRAM_USERNAME}`);
+  $("#thanksText").textContent = copied
+    ? "تم نسخ طلبك ✅ وفتح محادثة إنستغرام. الصق الطلب بالرسالة (اضغط مطولاً ثم لصق) وأرسله، وراح نتواصل وياك قريباً."
+    : "تم فتح محادثة إنستغرام. اكتب طلبك بالرسالة وأرسله، وراح نتواصل وياك قريباً.";
   showThanks(true);
 });
 
 $("#clearCartBtn").addEventListener("click", () => {
-  cart = {}; saveCart(); F.notes.value = ""; refresh(); showThanks(false); closeSheet();
+  cart = {}; saveCart(); refresh(); showThanks(false); closeSheet();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 $("#backBtn").addEventListener("click", () => showThanks(false));
@@ -451,7 +449,6 @@ function setupSpy() {
 /* ---------- Start ---------- */
 $("#year").textContent = new Date().getFullYear();
 renderMenu();
-loadCustomer();
 refresh();
 setupSpy();
 </script>
